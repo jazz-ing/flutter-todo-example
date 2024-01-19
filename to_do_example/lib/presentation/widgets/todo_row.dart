@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_example/constant/app_color.dart';
 import 'package:to_do_example/domain/todo/todo.dart';
 
 class TodoRow extends StatelessWidget {
@@ -36,7 +37,12 @@ class TodoRow extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: onButtonTap,
-              child: const Icon(Icons.circle_outlined),
+              child: todo.isDone
+                  ? const Icon(
+                      Icons.check_circle_rounded,
+                      color: AppColor.theme,
+                    )
+                  : Icon(Icons.circle_outlined, color: AppColor.deactivated),
             ),
             const SizedBox(width: 12),
             Expanded(
