@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_example/common_widget/controllers/navigation_controller.dart';
 import 'package:to_do_example/constant/app_color.dart';
-import 'package:to_do_example/presentation/controllers/navigation_controller.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});

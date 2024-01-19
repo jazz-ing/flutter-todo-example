@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:to_do_example/common_widget/controllers/navigation_controller.dart';
 import 'package:to_do_example/constant/app_color.dart';
 import 'package:to_do_example/domain/todo/todo.dart';
 import 'package:to_do_example/presentation/bindings/todo_bindings.dart';
-import 'package:to_do_example/presentation/controllers/navigation_controller.dart';
 import 'package:to_do_example/presentation/pages/todo_list_page.dart';
 
 void main() async {
