@@ -16,4 +16,16 @@ class Todo {
     required this.title,
     required this.isDone,
   });
+
+  Todo copyWith({
+    String? id,
+    String? title,
+    bool? isDone,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      isDone: isDone ?? this.isDone,
+    );
+  }
 }
