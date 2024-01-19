@@ -47,10 +47,16 @@ class TodoRow extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: GestureDetector(
-                onTap: onEdit,
+                onTap: todo.isDone ? null : onEdit,
                 child: Text(
                   todo.title,
-                  style: const TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16,
+                    decoration: todo.isDone
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                    color: todo.isDone ? AppColor.deactivated : Colors.black,
+                  ),
                 ),
               ),
             )

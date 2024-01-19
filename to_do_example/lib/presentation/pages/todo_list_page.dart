@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_example/common_widget/custom_bottom_navigation_bar.dart';
 import 'package:to_do_example/constant/app_color.dart';
 import 'package:to_do_example/presentation/controllers/todo_controller.dart';
 import 'package:to_do_example/presentation/widgets/todo_row.dart';
@@ -15,7 +14,6 @@ class TodoListPage extends StatelessWidget {
     return Scaffold(
       appBar: _todoAppBar(controller),
       body: Obx(() => _buildTodoList(controller)),
-      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 
@@ -41,9 +39,9 @@ class TodoListPage extends StatelessWidget {
       );
 
   Widget _buildTodoList(TodoController controller) {
-    final isTodoListEmpty = controller.todoList.isEmpty;
+    final isTodoListEmpty = controller.pendingTodos.isEmpty;
     final isAddingNewTodo = controller.isAddingNewTodo.value;
-    final todoCount = controller.todoList.length;
+    final todoCount = controller.pendingTodos.length;
 
     final editingIndex = controller.editingTodoIndex.value;
 
@@ -53,12 +51,12 @@ class TodoListPage extends StatelessWidget {
     return ListView.builder(
       itemCount: todoCount + (isAddingNewTodo ? 1 : 0),
       itemBuilder: (context, index) {
-        final todo = controller.todoList[index];
         if (index == todoCount && isAddingNewTodo) {
           return _textField(controller);
         } else if (index == editingIndex) {
           return _textField(controller);
         }
+        final todo = controller.pendingTodos[index];
         return TodoRow(
             todo: todo,
             onButtonTap: () => controller.toggleTodoIsDone(todo),
