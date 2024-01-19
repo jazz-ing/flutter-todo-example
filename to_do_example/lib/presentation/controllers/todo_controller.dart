@@ -10,15 +10,20 @@ class TodoController extends GetxController {
 
   TodoController({required this.todoRepository});
 
+  final todoList = <Todo>[].obs;
+  final isAddingNewTodo = false.obs;
+  final editingTodoIndex = Rx<int?>(null);
+
+  RxList<Todo> get pendingTodos =>
+      todoList.where((todo) => !todo.isDone).toList().obs;
+  RxList<Todo> get doneTodos =>
+      todoList.where((todo) => todo.isDone).toList().obs;
+
   @override
   void onInit() {
     super.onInit();
     fetchTodoList();
   }
-
-  final todoList = <Todo>[].obs;
-  final isAddingNewTodo = false.obs;
-  final editingTodoIndex = Rx<int?>(null);
 
   Future<void> fetchTodoList() async {
     final todoList = await todoRepository.getTodoList();
@@ -42,6 +47,7 @@ class TodoController extends GetxController {
       isDone: false,
     );
     todoRepository.createTodo(todo);
+    fetchTodoList();
   }
 
   void editTodo() {
