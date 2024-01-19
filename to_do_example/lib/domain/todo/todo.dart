@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'todo_entity.g.dart';
+part 'todo.g.dart';
 
 @HiveType(typeId: 0)
-class TodoEntity {
+class Todo {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -11,7 +11,7 @@ class TodoEntity {
   @HiveField(2)
   final bool isDone;
 
-  TodoEntity({
+  Todo({
     required this.id,
     required this.title,
     required this.isDone,
