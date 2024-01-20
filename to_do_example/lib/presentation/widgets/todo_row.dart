@@ -19,7 +19,7 @@ class TodoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(todo.id),
+      key: Key('dismiss_${todo.id}'),
       direction: DismissDirection.endToStart,
       onDismissed: (_) => onDelete(),
       background: Container(

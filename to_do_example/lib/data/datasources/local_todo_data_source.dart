@@ -24,4 +24,24 @@ class LocalTodoDataSource {
     final box = await _todoBox;
     await box.put(todo.id, todo);
   }
+
+  Future<void> updateTodoOrder(int oldIndex, int newIndex) async {
+    final box = await _todoBox;
+    final todoList = box.values.toList();
+    final pendingTodos = todoList.where((todo) => !todo.isDone).toList();
+
+    final oldItem = pendingTodos.removeAt(oldIndex);
+    pendingTodos.insert(newIndex, oldItem);
+
+    int pendingIndex = 0;
+    for (int i = 0; i < todoList.length; i++) {
+      if (!todoList[i].isDone) {
+        todoList[i] = pendingTodos[pendingIndex++];
+      }
+    }
+
+    for (var i = 0; i < todoList.length; i++) {
+      await box.putAt(i, todoList[i]);
+    }
+  }
 }

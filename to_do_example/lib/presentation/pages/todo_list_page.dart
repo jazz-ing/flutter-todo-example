@@ -48,26 +48,42 @@ class TodoListPage extends StatelessWidget {
     if (isTodoListEmpty && !isAddingNewTodo) {
       return const Center(child: Text('할 일을 추가해주세요!'));
     }
-    return ListView.builder(
+    return ReorderableListView.builder(
       itemCount: todoCount + (isAddingNewTodo ? 1 : 0),
       itemBuilder: (context, index) {
         if (index == todoCount && isAddingNewTodo) {
-          return _textField(controller);
+          return _textField(
+            controller: controller,
+            key: Key(controller.newTodoKey.value),
+          );
         } else if (index == editingIndex) {
-          return _textField(controller);
+          return _textField(
+            controller: controller,
+            key: Key('order_${controller.pendingTodos[index].id}'),
+          );
         }
         final todo = controller.pendingTodos[index];
         return TodoRow(
-            todo: todo,
-            onButtonTap: () => controller.toggleTodoIsDone(todo),
-            onEdit: () => controller.startTodoEditing(index),
-            onDelete: () => controller.deleteTodo(todo));
+          key: Key('order_${todo.id}'),
+          todo: todo,
+          onButtonTap: () => controller.toggleTodoIsDone(todo),
+          onEdit: () => controller.startTodoEditing(index),
+          onDelete: () => controller.deleteTodo(todo),
+        );
+      },
+      onReorder: (oldIndex, newIndex) {
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+        controller.reorderTodoList(oldIndex, newIndex);
       },
       shrinkWrap: true,
     );
   }
 
-  Widget _textField(TodoController controller) => Padding(
+  Widget _textField({required Key key, required TodoController controller}) =>
+      Padding(
+        key: key,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: Row(
           children: [

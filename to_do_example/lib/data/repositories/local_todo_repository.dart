@@ -26,4 +26,9 @@ class LocalTodoRepository implements TodoRepository {
   Future<void> updateTodo(Todo todo) {
     return _localTodoDataSource.updateTodo(todo);
   }
+
+  @override
+  Future<void> reorderTodo(int oldIndex, int newIndex) {
+    return _localTodoDataSource.updateTodoOrder(oldIndex, newIndex);
+  }
 }

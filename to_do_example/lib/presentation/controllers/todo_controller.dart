@@ -13,6 +13,7 @@ class TodoController extends GetxController {
   final todoList = <Todo>[].obs;
   final isAddingNewTodo = false.obs;
   final editingTodoIndex = Rx<int?>(null);
+  final newTodoKey = RxString('');
 
   RxList<Todo> get pendingTodos =>
       todoList.where((todo) => !todo.isDone).toList().obs;
@@ -51,7 +52,7 @@ class TodoController extends GetxController {
   }
 
   void editTodo() {
-    final todo = todoList[editingTodoIndex.value!]
+    final todo = pendingTodos[editingTodoIndex.value!]
         .copyWith(title: textEditingController.text);
     todoRepository.updateTodo(todo);
     fetchTodoList();
@@ -63,6 +64,7 @@ class TodoController extends GetxController {
   }
 
   void initiateNewTodo() {
+    newTodoKey.value = 'new-todo-${DateTime.now().millisecondsSinceEpoch}';
     editingTodoIndex.value = null;
     isAddingNewTodo.value = true;
     textEditingController.clear();
@@ -71,7 +73,7 @@ class TodoController extends GetxController {
 
   void startTodoEditing(int index) {
     editingTodoIndex.value = index;
-    textEditingController.text = todoList[index].title;
+    textEditingController.text = pendingTodos[index].title;
     focusNode = FocusNode();
     focusNode.requestFocus();
   }
@@ -79,6 +81,11 @@ class TodoController extends GetxController {
   void toggleTodoIsDone(Todo todo) {
     final toggledTodo = todo.copyWith(isDone: !todo.isDone);
     todoRepository.updateTodo(toggledTodo);
+    fetchTodoList();
+  }
+
+  Future<void> reorderTodoList(int oldIndex, int newIndex) async {
+    await todoRepository.reorderTodo(oldIndex, newIndex);
     fetchTodoList();
   }
 
