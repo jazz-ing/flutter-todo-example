@@ -7,7 +7,8 @@ class LocalTodoDataSource {
 
   Future<List<Todo>> getTodoList() async {
     final box = await _todoBox;
-    return box.values.toList();
+    return box.values.toList()
+      ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
   }
 
   Future<void> createTodo(Todo todo) async {
@@ -27,21 +28,15 @@ class LocalTodoDataSource {
 
   Future<void> updateTodoOrder(int oldIndex, int newIndex) async {
     final box = await _todoBox;
-    final todoList = box.values.toList();
-    final pendingTodos = todoList.where((todo) => !todo.isDone).toList();
+    final todoList = box.values.toList()
+      ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
 
-    final oldItem = pendingTodos.removeAt(oldIndex);
-    pendingTodos.insert(newIndex, oldItem);
+    final Todo item = todoList.removeAt(oldIndex);
+    todoList.insert(newIndex, item);
 
-    int pendingIndex = 0;
     for (int i = 0; i < todoList.length; i++) {
-      if (!todoList[i].isDone) {
-        todoList[i] = pendingTodos[pendingIndex++];
-      }
-    }
-
-    for (var i = 0; i < todoList.length; i++) {
-      await box.putAt(i, todoList[i]);
+      todoList[i].orderIndex = i;
+      await box.put(todoList[i].id, todoList[i]);
     }
   }
 }

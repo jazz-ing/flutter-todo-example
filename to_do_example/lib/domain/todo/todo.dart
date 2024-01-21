@@ -10,22 +10,27 @@ class Todo {
   final String title;
   @HiveField(2)
   final bool isDone;
+  @HiveField(3)
+  int orderIndex;
 
   Todo({
     required this.id,
     required this.title,
     required this.isDone,
+    required this.orderIndex,
   });
 
   Todo copyWith({
     String? id,
     String? title,
     bool? isDone,
+    int? orderIndex,
   }) {
     return Todo(
       id: id ?? this.id,
       title: title ?? this.title,
       isDone: isDone ?? this.isDone,
+      orderIndex: orderIndex ?? this.orderIndex,
     );
   }
 }

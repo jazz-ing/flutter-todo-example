@@ -7,26 +7,31 @@ class MockLocalTodoRepository implements TodoRepository {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: 'Todo 1',
       isDone: false,
+      orderIndex: 0,
     ),
     Todo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: 'Todo 2',
       isDone: false,
+      orderIndex: 1,
     ),
     Todo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: 'Todo 3',
       isDone: false,
+      orderIndex: 2,
     ),
     Todo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: 'Todo 4',
       isDone: false,
+      orderIndex: 3,
     ),
     Todo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: 'Todo 5',
       isDone: false,
+      orderIndex: 4,
     ),
   ];
 
