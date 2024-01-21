@@ -30,11 +30,19 @@ class LocalTodoDataSource {
     final box = await _todoBox;
     final todoList = box.values.toList()
       ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    final pendingTodos = todoList.where((todo) => !todo.isDone).toList();
 
-    final Todo item = todoList.removeAt(oldIndex);
-    todoList.insert(newIndex, item);
+    final Todo item = pendingTodos.removeAt(oldIndex);
+    pendingTodos.insert(newIndex, item);
 
+    int pendingIndex = 0;
     for (int i = 0; i < todoList.length; i++) {
+      if (!todoList[i].isDone) {
+        todoList[i] = pendingTodos[pendingIndex++];
+      }
+    }
+
+    for (var i = 0; i < todoList.length; i++) {
       todoList[i].orderIndex = i;
       await box.put(todoList[i].id, todoList[i]);
     }
