@@ -31,6 +31,7 @@ class TodoListPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: false,
         actions: [
           IconButton(
             icon: const Icon(

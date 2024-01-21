@@ -24,6 +24,7 @@ class DoneListPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: false,
       );
 
   Widget _buildDoneList(TodoController controller) {
