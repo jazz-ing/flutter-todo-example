@@ -15,7 +15,7 @@
 
 ## 기능 개요
 ### 할 일 생성/수정/삭제
-- 생성[(구현방식으로 이동)](#생성)    
+- 생성
 <img src="https://github.com/jazz-ing/ios-nala-market/assets/78457093/d748a7f3-4019-427e-afd6-217c9680096f" width="220" height="500"> <br>
   - Navigation Bar의 '+' 버튼을 누르면 텍스트 필드가 추가되며 입력할 수 있습니다.
   - 아무것도 입력하지 않고 '완료' 버튼을 누르면 생성되지 않습니다.
@@ -51,9 +51,6 @@
     Future<void> reorderTodo(int oldIndex, int newIndex);
   }
   ```
-
-### 할 일 생성/수정/삭제
-
 
 ### 순서 이동
 - `Todo` Entity에 `orderIndex` 프로퍼티를 추가해 객체 자체에서 순서 정보를 관리할 수 있도록 구현
