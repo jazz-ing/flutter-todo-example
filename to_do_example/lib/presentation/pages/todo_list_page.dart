@@ -11,9 +11,15 @@ class TodoListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TodoController controller = Get.find();
 
-    return Scaffold(
-      appBar: _todoAppBar(controller),
-      body: Obx(() => _buildTodoList(controller)),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        controller.editingTodoIndex.value = null;
+      },
+      child: Scaffold(
+        appBar: _todoAppBar(controller),
+        body: Obx(() => _buildTodoList(controller)),
+      ),
     );
   }
 
@@ -96,8 +102,8 @@ class TodoListPage extends StatelessWidget {
               child: TextField(
                 controller: controller.textEditingController,
                 focusNode: controller.focusNode,
-                onSubmitted: (value) {
-                  controller.handleTodoSubmit();
+                onSubmitted: (text) {
+                  controller.handleTodoSubmit(text: text);
                 },
                 decoration: const InputDecoration(isDense: true),
               ),

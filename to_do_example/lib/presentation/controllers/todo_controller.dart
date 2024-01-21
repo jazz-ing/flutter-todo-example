@@ -31,29 +31,28 @@ class TodoController extends GetxController {
     this.todoList.value = todoList;
   }
 
-  void handleTodoSubmit() {
+  void handleTodoSubmit({required String text}) {
     final isEditing = editingTodoIndex.value != null;
     if (isEditing) {
-      editTodo();
+      editTodo(text: text);
     } else {
-      createTodo();
+      createTodo(text: text);
     }
     _resetTodoInput();
   }
 
-  void createTodo() {
+  void createTodo({required String text}) {
     final todo = Todo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: textEditingController.text,
+      title: text,
       isDone: false,
     );
     todoRepository.createTodo(todo);
     fetchTodoList();
   }
 
-  void editTodo() {
-    final todo = pendingTodos[editingTodoIndex.value!]
-        .copyWith(title: textEditingController.text);
+  void editTodo({required String text}) {
+    final todo = pendingTodos[editingTodoIndex.value!].copyWith(title: text);
     todoRepository.updateTodo(todo);
     fetchTodoList();
   }
@@ -78,9 +77,9 @@ class TodoController extends GetxController {
     focusNode.requestFocus();
   }
 
-  void toggleTodoIsDone(Todo todo) {
+  Future<void> toggleTodoIsDone(Todo todo) async {
     final toggledTodo = todo.copyWith(isDone: !todo.isDone);
-    todoRepository.updateTodo(toggledTodo);
+    await todoRepository.updateTodo(toggledTodo);
     fetchTodoList();
   }
 
