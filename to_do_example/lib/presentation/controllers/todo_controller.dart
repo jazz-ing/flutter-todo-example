@@ -46,9 +46,12 @@ class TodoController extends GetxController {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: text,
       isDone: false,
+      orderIndex: todoList.length,
     );
-    todoRepository.createTodo(todo);
-    fetchTodoList();
+    if (text.isNotEmpty) {
+      todoRepository.createTodo(todo);
+      fetchTodoList();
+    }
   }
 
   void editTodo({required String text}) {
